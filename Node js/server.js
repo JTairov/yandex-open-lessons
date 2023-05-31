@@ -3,13 +3,17 @@ const express = require('express')
 const { urlLogger } = require('./middleware/urlLogger')
 const { notFound } = require('./middleware/notFound')
 const { errorHandler } = require('./middleware/errorHandler')
+const { secure } = require('./middleware/secure')
 const { resolveAlias } = require('./controllers/resolveAlias')
 const { ping } = require('./middleware/ping')
 const { addAlias } = require('./controllers/addAlias')
 const { accessLogs } = require('./middleware/accessLogs')
 const { dumpDataBase } = require('./utils/dumpDataBase')
+const { monitorProcess } = require('./utils/monitorProcess')
 
 const app = express()
+
+secure(app)
 
 app.use(express.json())
 
@@ -28,3 +32,4 @@ const PORT = 3000
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
 
 dumpDataBase()
+// monitorProcess()
